@@ -1,0 +1,207 @@
+/**
+ * Cinematic Loader Styles
+ * 
+ * Key principles:
+ * - Masked container prevents layout shifts
+ * - Typography uses bold condensed font (system fallback until custom font loaded)
+ * - Filled vs outlined letters via webkit-text-stroke
+ * - Transform and opacity for performance
+ * - Orange gradient background
+ */
+
+/* ============================================
+   FULLSCREEN LOADER CONTAINER
+   ============================================ */
+
+.loader-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+/* Horizontal split halves */
+.loader-split-top,
+.loader-split-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #C65A1E 0%, #A84318 100%);
+  z-index: 1;
+}
+
+.loader-split-top {
+  top: 0;
+  height: 50vh;
+}
+
+.loader-split-bottom {
+  bottom: 0;
+  height: 50vh;
+}
+
+/* ============================================
+   MASKED TEXT CONTAINER
+   ============================================ 
+   
+   This is THE critical element for smooth animation:
+   - Fixed height prevents layout jumps
+   - overflow: hidden clips letters moving outside
+   - All words animate through this same space
+   - Acts as a "window" that text slides through
+*/
+
+.loader-text-mask {
+  position: relative;
+  height: 140px; /* Fixed height for mask - adjust based on font size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* CRITICAL: clips letters outside container */
+  width: 90vw;
+  max-width: 1000px;
+  z-index: 2; /* Above split halves */
+}
+
+/* ============================================
+   ANIMATED WORD CONTAINER
+   ============================================ */
+
+.animated-word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* Keep word on single line */
+  position: absolute; /* Positioned within mask */
+  width: 100%;
+}
+
+/* Final word gets visual emphasis through zoom animation */
+.animated-word.final-word {
+  /* Scale is controlled by Framer Motion zoom animation */
+}
+
+/* ============================================
+   LETTER TYPOGRAPHY
+   ============================================
+   
+   Uses system condensed fonts as fallback
+   Custom font (Druk Condensed) can be added via @font-face
+*/
+
+.letter {
+  font-family: 'Impact', 'Arial Narrow Bold', 'Helvetica Condensed', sans-serif;
+  font-size: clamp(4rem, 12vw, 8rem); /* Responsive sizing */
+  font-weight: 900;
+  letter-spacing: 0.05em; /* Slightly open spacing */
+  line-height: 1;
+  text-transform: uppercase;
+  color: #F5F5F5;
+  display: inline-block;
+  /* Performance optimization */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   FILLED vs OUTLINED LETTERS
+   ============================================ */
+
+/* Filled letters: solid color */
+.letter.filled {
+  color: #F5F5F5;
+}
+
+/* Outlined letters: transparent fill with stroke */
+.letter.outlined {
+  color: transparent;
+  -webkit-text-stroke: 2px #F5F5F5;
+  text-stroke: 2px #F5F5F5;
+}
+
+/* Final word uses stronger, more prominent color */
+.final-word .letter.filled {
+  color: #FFFFFF;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.final-word .letter.outlined {
+  -webkit-text-stroke: 2.5px #FFFFFF;
+  text-stroke: 2.5px #FFFFFF;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .loader-text-mask {
+    height: 100px;
+    width: 95vw;
+  }
+
+  .letter {
+    font-size: clamp(3rem, 10vw, 6rem);
+    letter-spacing: 0.03em;
+  }
+
+  .letter.outlined {
+    -webkit-text-stroke: 1.5px #F5F5F5;
+    text-stroke: 1.5px #F5F5F5;
+  }
+
+  .animated-word.final-word {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .loader-text-mask {
+    height: 80px;
+  }
+
+  .letter {
+    font-size: clamp(2.5rem, 12vw, 4.5rem);
+    letter-spacing: 0.02em;
+  }
+
+  .letter.outlined {
+    -webkit-text-stroke: 1px #F5F5F5;
+    text-stroke: 1px #F5F5F5;
+  }
+
+  .animated-word.final-word {
+    transform: scale(1.08);
+  }
+
+  .final-word .letter.outlined {
+    -webkit-text-stroke: 1.5px #FFFFFF;
+    text-stroke: 1.5px #FFFFFF;
+  }
+}
+
+/* ============================================
+   OPTIONAL: CUSTOM FONT
+   ============================================ 
+   
+   Uncomment and add Druk Condensed Bold for production:
+   
+   @font-face {
+     font-family: 'Druk Condensed';
+     src: url('../fonts/DrukCondensed-Bold.woff2') format('woff2');
+     font-weight: 700;
+     font-display: swap;
+   }
+   
+   Then update .letter font-family:
+   font-family: 'Druk Condensed', 'Impact', sans-serif;
+*/

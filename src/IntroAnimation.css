@@ -1,0 +1,121 @@
+/* Full-screen intro container */
+.intro-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #C65A1E 0%, #A84318 100%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Fluid blob animation */
+.blob-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  z-index: 1;
+}
+
+.blob {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6EC1FF 0%, #3A7DFF 100%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  opacity: 0.4;
+  filter: blur(40px);
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+@keyframes blob-morph {
+  0%, 100% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: scale(1.05) rotate(5deg);
+  }
+  50% {
+    border-radius: 30% 60% 50% 40% / 50% 60% 30% 60%;
+    transform: scale(0.95) rotate(-5deg);
+  }
+  75% {
+    border-radius: 50% 30% 60% 40% / 30% 50% 40% 60%;
+    transform: scale(1.02) rotate(3deg);
+  }
+}
+
+/* Text container */
+.intro-text-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+/* Main intro text */
+.intro-text-main {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #F5F5F5;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Signature name */
+.intro-text-name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 768px) {
+  .blob {
+    width: 120%;
+    height: 120%;
+    filter: blur(50px);
+  }
+
+  .intro-text-container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .blob {
+    width: 140%;
+    height: 140%;
+    filter: blur(60px);
+  }
+
+  .intro-text-container {
+    padding: 0 1rem;
+  }
+
+  .intro-text-main {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-text-name {
+    font-size: 2.5rem;
+  }
+}
