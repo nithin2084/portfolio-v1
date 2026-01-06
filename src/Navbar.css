@@ -1,33 +1,128 @@
-.navbar {
-  background: #222;
-  padding: 1rem 0;
+/* Existing navbar styles removed/replaced */
+
+:root {
+  --primary-orange: #ff6b00; /* Example orange, adjust as needed */
+  --text-white: #ffffff;
+}
+
+/* Hamburger Container */
+.hamburger-container {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px; /* Max width reference */
+  height: 24px;
+  cursor: pointer;
+  z-index: 2000; /* Above overlay */
+  align-items: flex-end; /* Align lines to the right as per design intuition, or left? User said "top right corner". Usually standard is end-aligned or center. Let's try end-aligned so lengths differ clearly. */
+}
+
+.hamburger-line {
+  height: 4px;
+  background-color: var(--text-white);
+  border-radius: 4px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+/* Initial State: 1 small, 2 med, 3 full */
+.line-1 {
+  width: 40%;
+}
+.line-2 {
+  width: 70%;
+}
+.line-3 {
+  width: 100%;
+}
+
+/* Open State (Inverted): 1 full, 2 med, 3 small */
+.hamburger-container.open .line-1 {
+  width: 100%;
+  background-color: var(--primary-orange);
+}
+.hamburger-container.open .line-2 {
+  width: 70%;
+  background-color: var(--primary-orange);
+}
+.hamburger-container.open .line-3 {
+  width: 40%;
+  background-color: var(--primary-orange);
+}
+
+/* Menu Overlay */
+.menu-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.navbar ul {
-  list-style: none;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95); /* Tint */
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 0;
+  align-items: flex-start; /* Left aligned */
+  padding-left: 10%; /* Spacing from left */
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-items {
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.navbar li {
-  margin: 0 1.5rem;
+.menu-items li {
+  margin-bottom: 2rem;
+  overflow: hidden; /* For slide up reveal if needed, using opacity for now */
 }
 
-.navbar a {
-  color: #fff;
+/* Typography & Animation */
+.menu-items a {
   text-decoration: none;
-  font-size: 1.1rem;
-  transition: color 0.2s;
+  color: var(--text-white);
+  font-size: 3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: color 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, color 0.3s;
 }
 
-.navbar a:hover {
-  color: #61dafb;
+/* Staggered Animation for Items */
+/* We can adjust delay based on index if we had CSS modules or SCSS loop, here manually: */
+.menu-overlay.open .menu-items li:nth-child(1) a { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.menu-overlay.open .menu-items li:nth-child(2) a { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.menu-overlay.open .menu-items li:nth-child(3) a { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.menu-overlay.open .menu-items li:nth-child(4) a { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+
+.menu-items a:hover {
+  color: var(--primary-orange);
+}
+
+.dash {
+  margin-right: 1rem;
+  color: var(--primary-orange);
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.menu-overlay.open .dash {
+  opacity: 1;
+  transform: translateX(0);
 }
