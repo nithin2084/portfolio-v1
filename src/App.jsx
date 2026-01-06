@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { Container } from 'react-bootstrap';
 import LoaderCinematic from './LoaderCinematic';
 import BlobBackground from './BlobBackground';
+import HomePage from './HomePage';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -15,9 +16,21 @@ function App() {
 
   return (
     <>
+      {/* Cinematic loader - shows first */}
       {showLoader && <LoaderCinematic onComplete={handleLoaderComplete} />}
-      {!showLoader && <BlobBackground />}
+      
+      {/* After loader completes, show homepage content */}
+      {!showLoader && (
+        <>
+          {/* Three.js blob background - fixed behind all content */}
+          <BlobBackground />
+          
+          {/* Homepage with hero text and NITHIN brand */}
+          <HomePage />
+        </>
+      )}
 
+      {/* Navbar - always on top */}
       <Navbar />
     </>
   );

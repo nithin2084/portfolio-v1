@@ -3,6 +3,7 @@
 :root {
   --primary-orange: #ff6b00; /* Example orange, adjust as needed */
   --text-white: #ffffff;
+  --brand-yellow: #D4A855; /* Golden yellow for navbar icon */
 }
 
 /* Hamburger Container */
@@ -22,7 +23,7 @@
 
 .hamburger-line {
   height: 4px;
-  background-color: var(--text-white);
+  background-color: var(--brand-yellow); /* Golden yellow for initial state */
   border-radius: 4px;
   transition: width 0.4s ease, background-color 0.4s ease;
 }

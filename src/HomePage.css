@@ -1,0 +1,141 @@
+/**
+ * HomePage Styles
+ * 
+ * Layering hierarchy (z-index):
+ * - BlobBackground: -1 (behind everything)
+ * - homepage-container: 1 (above blobs)
+ * - brand-text: 10 (above hero text)
+ * - Navbar: 100 (above all - already set in Navbar component)
+ * 
+ * Colors (matching reference image):
+ * - Background: Dark blue navy (#2C3E50 or similar)
+ * - Blobs: Yellow/golden (#F59E0B already set in BlobBackground)
+ * - Text: White with filled/outlined styling
+ */
+
+.homepage-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none; /* Allow clicks to pass through to navbar */
+}
+
+/* NITHIN brand text - top left corner */
+.brand-text {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  z-index: 10;
+  font-family: 'Impact', 'Arial Narrow Bold', 'Franklin Gothic Demi Cond', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  display: flex;
+  pointer-events: auto;
+}
+
+.brand-text .hero-letter {
+  display: inline-block;
+}
+
+/* NITHIN specific color styling - matches reference image */
+.brand-text .hero-letter.filled {
+  color: #D4A855; /* Yellow/golden for filled letters */
+  -webkit-text-fill-color: #D4A855;
+  -webkit-text-stroke: 2px #D4A855;
+}
+
+.brand-text .hero-letter.outlined {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #D4A855; /* White stroke for outlined letters */
+}
+
+/* Hero text container - centered on screen */
+.hero-text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* Individual hero words */
+.hero-word {
+  font-family: 'Impact', 'Arial Narrow Bold', 'Franklin Gothic Demi Cond', sans-serif;
+  font-size: 10rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.85;
+  text-transform: uppercase;
+  display: flex;
+  white-space: nowrap;
+}
+
+/* Individual letters within words */
+.hero-letter {
+  display: inline-block;
+  position: relative;
+}
+
+/* Filled letters - solid white */
+.hero-letter.filled {
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
+  -webkit-text-stroke: 2px #FFFFFF;
+}
+
+/* Outlined letters - transparent fill with white stroke */
+.hero-letter.outlined {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #FFFFFF;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .hero-word {
+    font-size: 8rem;
+  }
+  
+  .brand-text {
+    font-size: 2.5rem;
+    top: 30px;
+    left: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-word {
+    font-size: 5rem;
+  }
+  
+  .brand-text {
+    font-size: 2rem;
+    top: 20px;
+    left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-word {
+    font-size: 3.5rem;
+  }
+  
+  .brand-text {
+    font-size: 1.5rem;
+  }
+}
+
+/* Ensure text is selectable but doesn't interfere with navbar clicks */
+.hero-text-container * {
+  pointer-events: auto;
+  user-select: none;
+}
